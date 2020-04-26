@@ -48,6 +48,7 @@ class Clock extends React.Component {
       inBreak: false,
     });
     clearInterval(this.intervalHandle);
+    this.resetSound();
   }
 
   DecreaseBreak() {
@@ -124,6 +125,7 @@ class Clock extends React.Component {
     }
 
     if ((min === 0) & (sec === 0)) {
+      this.playSound();
       // Starting Break
       if (!this.state.inBreak) {
         this.setState({ statusUpdate: "In Breaaak" });
@@ -155,6 +157,22 @@ class Clock extends React.Component {
     else if (!this.state.timerRunning) {
       this.intervalHandle = setInterval(this.Tick, 1000);
     }
+  }
+
+  resetSound() {
+    // let audio = new Audio(sound[this.props.playKey]);
+    // audio.play();
+    const sound = document.getElementById("beep");
+    sound.pause();
+    sound.currentTime = 0;
+  }
+
+  playSound() {
+    // let audio = new Audio(sound[this.props.playKey]);
+    // audio.play();
+    const sound = document.getElementById("beep");
+    sound.currentTime = 0;
+    sound.play();
   }
 
   render() {
@@ -190,6 +208,12 @@ class Clock extends React.Component {
         <button id="reset" onClick={this.Reset}>
           Reset!
         </button>
+        <audio
+          className="clip"
+          id="beep"
+          src="https://www.soundjay.com/misc/bell-ringing-04.mp3"
+          autoplay="false"
+        ></audio>
       </div>
     );
   }
